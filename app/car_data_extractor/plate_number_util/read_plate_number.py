@@ -1,8 +1,7 @@
+# from get_plate_reader import get_model
 from car_data_extractor.plate_number_util.get_plate_reader import get_model
 
-
 MIN_CONFIDENCE = 0.5
-
 
 def read_plate_number(plate_image):
   """
@@ -23,7 +22,28 @@ def read_plate_number(plate_image):
 
   prediction = result[0]
 
-  if prediction.confidence < MIN_CONFIDENCE:
+  if not prediction.has_confidence or len(prediction.char_probs)==0:
     return None
 
-  return (prediction.text,prediction.confidence)
+  confidence = get_avg_confidence(prediction)
+
+  if confidence < MIN_CONFIDENCE:
+    return None
+
+  return (prediction.plate, confidence)
+
+
+def get_avg_confidence(prediction):
+  return sum(prediction.char_probs) / len(prediction.char_probs)
+
+
+## Testing
+# import numpy as np
+# from PIL import Image
+
+# image = Image.open("input/plate_image_test.png").convert("RGB")
+# img_array = np.array(image)
+
+# text, conf = read_plate_number(img_array)
+
+# print(text, conf)

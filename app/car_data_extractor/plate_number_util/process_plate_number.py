@@ -1,7 +1,15 @@
 from car_data_extractor.plate_number_util.read_plate_number import read_plate_number
 from car_data_extractor.plate_number_util.detect_plate_number import detect_plate
+from PIL import Image
+
+counter=0
 
 def process_plate_number(car_image):
+  global counter
+
+  # counter+=1
+  # Image.fromarray(car_image).save("input/plates/plate"+str(counter)+".png")
+
   plate_box=detect_plate(car_image)
 
   if plate_box is None:
@@ -11,6 +19,7 @@ def process_plate_number(car_image):
 
   if plate_image is None:
     return None
+
 
   plate_text,prediction_confidence = read_plate_number(plate_image)
 

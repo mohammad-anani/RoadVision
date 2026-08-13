@@ -16,7 +16,7 @@ def handle_frame(frame):
 
   cars_to_process= remove_and_get_finalized_tracked_cars(tracked_cars)
 
-  process_cars(cars_to_process,frame)
+  process_cars(cars_to_process)
 
   frame_with_outlined_objects= result.plot()
 
