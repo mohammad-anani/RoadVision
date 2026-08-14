@@ -16,6 +16,7 @@ def iterate_over_video_frames(video_path):
     success, frame = video.read()
 
     if not success:
+      print("Video ended or could not read the frame")
       break
 
     handled_frame = handle_frame(frame)
@@ -23,6 +24,7 @@ def iterate_over_video_frames(video_path):
     cv2.imshow("Video", handled_frame)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
+      print("Clicked 'Q': Exitting")
       break
 
   video.release()

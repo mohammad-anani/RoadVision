@@ -5,6 +5,7 @@ from zoneinfo import ZoneInfo
 def update_tracked_cars(result, tracked_cars, frame):
 
   if result.boxes.id is None:
+    print("No Ids found to track")
     return
 
   track_ids = result.boxes.id.int().cpu().tolist()
@@ -18,6 +19,7 @@ def update_tracked_cars(result, tracked_cars, frame):
     box_area = calculate_box_area(x1, y1, x2, y2)
 
     if box_area <= 0:
+      print("Car #"+str(track_id)+"Invalid Box area")
       continue
 
     if track_id not in tracked_cars:

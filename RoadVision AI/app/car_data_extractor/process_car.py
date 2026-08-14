@@ -24,14 +24,17 @@ def process_car(car):
   car_info_result= classify_car(car_image)
 
   if plate_result is None and car_info_result is None:
+    print("Discarding car #"+str(car["track_id"]+" : Couldn't extract infor or plate number"))
     return None
 
   if plate_result is None:
+    print("Car #"+str(car["track_id"]+": Extracted car info only"))
     plate_text, plate_text_confidence = None, None
   else:
     plate_text, plate_text_confidence = plate_result
 
   if car_info_result is None:
+    print("Car #"+str(car["track_id"]+": Extracted plate number only"))
     car_info, car_info_confidence = None, None
   else:
     car_info, car_info_confidence = car_info_result
