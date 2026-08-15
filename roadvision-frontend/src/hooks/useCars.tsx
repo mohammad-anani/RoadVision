@@ -7,35 +7,37 @@ export default function useCars() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchCars() {
-      try {
+  async function fetchCars() {
+    try {
 
-        setLoading(true);
-        setError(null);
+      setLoading(true);
+      setError(null);
 
-        const response = await fetch(
-          `${API_URL}api/detected-cars`
-        );
+      const response = await fetch(
+        `${API_URL}api/detected-cars`
+      );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch detected cars");
-        }
-
-        const data: DetectedCar[] = await response.json();
-
-        setCars(data);
-      } catch (error) {
-        setError(
-          error instanceof Error
-            ? error.message
-            : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error("Failed to fetch detected cars");
       }
-    };
 
+      const data: DetectedCar[] = await response.json();
+
+      setCars(data);
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "An unknown error occurred"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchCars();
   }, []);
 
@@ -43,5 +45,6 @@ export default function useCars() {
     cars,
     loading,
     error,
+    refresh: fetchCars
   };
 }

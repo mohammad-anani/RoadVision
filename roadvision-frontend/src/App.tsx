@@ -12,17 +12,14 @@ export const API_URL = "https://localhost:7047";
 function App() {
   const [filter, setFilter] = useState<FilterType>({});
 
-  const {
-    cars,
-    loading,
-    error,
-  } = useCars();
+
+  const { cars, loading, error, refresh } = useCars();
 
   const filteredCars = useFilter(cars, filter)
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header />
+      <Header onRefreshClick={() => { refresh() }} />
 
       <main className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
         <Filter
